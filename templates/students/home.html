@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+     
+   
+    <title>Welcome to Profiler</title>
+      
+    {% endblock %}
+
+{% block content %}
+<style>
+  body{
+    background-image: url("{% static 'bg2.jpg'%}")!important;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+</style>
+
+    
+
+<div class="container">
+  <div class="row">
+    <div class="col mbv flex-mw-10 rounded">
+
+       <form class="form">
+         <div class="form-group mx-2 my-4 py-2 px-2 ">
+           <input type="text" class="form-control form-control-lg" width="100%" placeholder="Search Student" name="search" id="">
+         </div>
+        
+       </form>
+         <div class='rounded mx-3 my-4 px-2 py-2 float-sm-left' style="background-color: rgb(233, 233, 233);">
+          
+          {% for n in name %}
+            
+         
+            
+         
+          <div class="border-bottom border-secondary">
+             <div class="row">
+               <div class="col my-2">
+               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzUnXd03EW_RgVSHjTWkj0I6pEcH_VgiN86ZbkrnGT-Grl3eix53O8HHh7ZYlMT26b-w8&usqp=CAU" class="rounded " alt="" width="70%" height="100%">
+             </div>
+             <div class="col-9"><h4 class="align-middle pt-2"><a class="showthis nav-link" href="{% url 'generate' id=n.pk %}">{{n|capfirst}}</a></h4></div>
+             </div> 
+           </div>
+           
+           {% endfor %}
+           
+           
+       </div>
+      </div>
+    <div class="col col-md-8 colm2">
+      <div class="shadow p-3 mb-5 bg-white rounded">
+        <script>
+          $(document).ready(function(){
+         
+          $(".s").click(function(){
+            $('.mbv').toggle('slow');
+
+          });
+        });
+        </script>
+        <button type="button" class="btn btn-outline-primary s">Show Students</button>
+        <!--<button type="button" class="btn btn-outline-secondary">Secondary</button>
+        <button type="button" class="btn btn-outline-success">Success</button>-->
+        <button type="button" class="btn btn-outline-danger float-right"  data-toggle="modal" data-target="#exampleModal">Delete</button>
+        <!--<button type="button" class="btn btn-outline-warning">Warning</button>
+        <button type="button" class="btn btn-outline-info">Info</button>
+        <button type="button" class="btn btn-outline-light">Light</button>
+        <button type="button" class="btn btn-outline-dark">Dark</button>-->
+      </div>
+
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Delete Record</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Do you still want to delete this Student's Record ?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <a href="{% url 'delete' %}" class="btn btn-danger">Confirm Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+{% if messages %}
+{% for msg in messages %}
+<center><h1>{{msg}}</h1>
+  
+  {% if request.user.is_superuser  %}    
+        <a href="/admin/account/profile/add/" class="btn btn-outline-primary">Add Manually</a></center>
+  {% endif %}
+{% endfor %}
+{% endif %}
+  
+        <div class="container-chart my-5"><canvas id="myChart" width="400" height="400"></canvas></div>
+
+      </div>
+  
+
+  
+<script>
+
+
+
+var ctx = document.getElementById('myChart').getContext('2d');
+var data=JSON.parse('{{data|safe}}');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: Object.keys(data),
+        datasets: [{
+            label: '# of Attendance',
+            data: Object.values(data),
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+
+</div>
+</div></div>        
+
+    
+  {% endblock content %}

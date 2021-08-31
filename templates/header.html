@@ -1,0 +1,61 @@
+{% load static %}
+<!--<header class="p-3 bg-dark text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <span class="navbar-brand mb-0 h1 nv">Navbar</span>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+          <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+        </form>
+
+        <div class="text-end">
+          <button type="button" class="btn btn-outline-light me-2">Login</button>
+          <button type="button" class="btn btn-warning">Sign-up</button>
+        </div>
+      </div>
+    </div>
+  </header>-->
+<script>
+  $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <span class="navbar-brand mx-5 my-1 h1 nv"><h2><b>Profiler</b></h2></span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'Register' %}">Register</a>
+          
+          {% if request.user.is_authenticated %}
+            
+        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        
+        
+        {% for img in profile %}
+        
+        
+
+        <img src="{% static 'profile' %}/{{img.pic}}" class="rounded-circle" style="width: 50px;height: 50px;" data-toggle="tooltip" data-placement="bottom" title="Welcome {{request.user|capfirst}}" alt="...">
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  
